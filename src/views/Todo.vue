@@ -1,18 +1,57 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <v-list
+    class="pt-0"
+      flat
+    >
+    <div v-for="task in tasks"
+        :key="task.id" >
+      <v-list-item @click="doneTask(task.id)">
+        <template v-slot:default>
+          <v-list-item-action>
+            <v-checkbox :input-value="task.done"></v-checkbox>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ task.title }}</v-list-item-title>
+          </v-list-item-content>
+        </template>
+      </v-list-item>
+      <v-divider></v-divider>
+    </div>
+  </v-list>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      tasks: [
+        {
+          id: 1,
+          title: 'Wake up',
+          done: false
+      },
+      {
+          id: 2,
+          title: 'Get Bananas',
+          done: false
+      },
+      {
+          id: 3,
+          title: 'Eat Banana',
+          done: false
+      }
+     ]
+    }
+  },
+  methods: {
+    doneTask(id){
+      let task = this.tasks.filter(task => task.id === id)[0]
+      task.done = !task.done
+    }
   }
 }
 </script>
