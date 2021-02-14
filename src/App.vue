@@ -5,9 +5,7 @@
     app>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title">
-            Todo
-          </v-list-item-title>
+          <v-list-item-title class="title">Todo </v-list-item-title>
           <v-list-item-subtitle>
             Much Ado About Nothing!
           </v-list-item-subtitle>
@@ -53,9 +51,9 @@
 
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>Todo</v-app-bar-title>
-
-      <v-spacer></v-spacer>
+      <v-app-bar-title>
+        <v-spacer /> Todo... <v-spacer />
+      </v-app-bar-title>
 
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>

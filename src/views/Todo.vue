@@ -1,13 +1,25 @@
 <template>
   <div class="home">
+    <v-text-field
+    v-model="newTaskTitle"
+    @click:append="addTask"
+    @keyup.enter="addTask"
+    class="pa-3"
+    outlined
+    label="Something Todo?"
+    append-icon="mdi-plus-box"
+    hide-details
+    clearable
+    ></v-text-field>
     <v-list
+    v-if="$store.state.tasks.length"
     class="pt-0"
       flat
     >
-    <div v-for="task in tasks"
+    <div v-for="task in $store.state.tasks"
         :key="task.id" >
       <v-list-item 
-      @click="doneTask(task.id)"
+      @click="$store.commit('doneTask', task.id)"
       :class="{ 'blue lighten-4' : task.done }"
       >
         <template v-slot:default>
@@ -23,7 +35,7 @@
 
           <v-list-item-action>
             <v-btn
-            @click.stop="deleteTask(task.id)"
+            @click.stop="$store.commit('deleteTask', task.id)"
             icon
             >
               <v-icon color="primary">mdi-delete</v-icon>
@@ -34,6 +46,18 @@
       <v-divider></v-divider>
     </div>
   </v-list>
+  <div
+  v-else
+  class="no-tasks"
+  >
+    <v-icon
+    size="100"
+    color="primary"
+    >
+    mdi-party-popper
+    </v-icon>
+    <div class="text-h5 primary--text">Congrats!</div>
+  </div>
   </div>
 </template>
 
@@ -43,33 +67,24 @@ export default {
   name: 'Home',
   data() {
     return {
+      newTaskTitle: 'Add a task!',
       tasks: [
-        {
-          id: 1,
-          title: 'Wake up',
-          done: false
-      },
-      {
-          id: 2,
-          title: 'Get Bananas',
-          done: false
-      },
-      {
-          id: 3,
-          title: 'Eat Banana',
-          done: false
-      }
      ]
     }
   },
   methods: {
-    doneTask(id) {
-      let task = this.tasks.filter(task => task.id === id)[0]
-      task.done = !task.done
+    addTask(){
+      this.$store.commit('addTask', this.newTaskTitle)
+      this.newTaskTitle = ''
     },
-    deleteTask(id) {
-      this.tasks = this.tasks.filter(task => task.id !== id)
-    }
   }
 }
 </script>
+<style lang="sass">
+  .no-tasks
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    opacity: 50%
+</style>
