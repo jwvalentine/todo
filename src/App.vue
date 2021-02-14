@@ -41,7 +41,7 @@
       app
       color="primary"
       dark
-      src="https://picsum.photos/1920/1080?random"
+      src="japan.jpg"
       prominent
     >
       <template v-slot:img="{ props }">
